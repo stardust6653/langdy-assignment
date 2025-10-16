@@ -7,3 +7,5 @@ export interface VideoData {
   publishedAt: string;
   duration: string;
 }
+
+export type FilterType = "최신순" | "인기순" | "날짜순";
