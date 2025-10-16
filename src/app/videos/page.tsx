@@ -5,7 +5,7 @@ import ChannelInformation from "@/components/common/ChannelInformation";
 import { useFetch } from "@/hooks/useFetch";
 import { ChannelData } from "@/types/channel";
 import TabMenus from "@/components/common/TabMenus";
-import VideoList from "@/components/page/home/VideoList";
+import VideoList from "@/components/page/videos/VideoList";
 
 const VideosPage = () => {
   const { data, loading, error } = useFetch<ChannelData>("/api/channel");
