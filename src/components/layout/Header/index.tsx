@@ -11,7 +11,9 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <div className={styles.headerInner}>
-        <MdMenu size={24} className={styles.menuIcon} />
+        <button aria-label="사이드바 열기" className={styles.menuButton}>
+          <MdMenu size={24} className={styles.menuIcon} />
+        </button>
         <Logo />
       </div>
 
