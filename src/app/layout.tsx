@@ -26,7 +26,7 @@ export default function RootLayout({
         <Header />
         <main className={styles.layoutMain}>
           <Sidebar />
-          {children}
+          <div className={styles.layoutContent}>{children}</div>
         </main>
       </body>
     </html>
