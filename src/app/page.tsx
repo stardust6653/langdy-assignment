@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className={styles.home}>
       <Banner data={data} loading={loading} />
-      <ChannelInformation />
+      <ChannelInformation data={data} loading={loading} />
     </div>
   );
 }
