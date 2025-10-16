@@ -27,8 +27,8 @@ dd {
 }
 
 /* list를 role값으로 갖는 ul, ol 요소의 기본 목록 스타일을 제거합니다. */
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 
@@ -86,4 +86,11 @@ textarea:not([rows]) {
 /* 고정된 모든 항목에는 여분의 스크롤 여백이 있어야 합니다. */
 :target {
   scroll-margin-block: 5ex;
+}
+
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
