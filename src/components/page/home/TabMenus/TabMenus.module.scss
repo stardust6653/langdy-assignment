@@ -1,0 +1,35 @@
+.tabMenuList {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tabMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 48px;
+  height: 46px;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    border-bottom: 2px solid #797979;
+  }
+}
+
+.active {
+  border-color: #000;
+  &:hover {
+    border-color: #000;
+  }
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 12px;
+}
