@@ -24,6 +24,9 @@ const ChannelInformation = ({ data, loading }: Props) => {
           <div
             className={`${styles.skeleton} ${styles.channelLinksSkeleton}`}
           />
+          <div
+            className={`${styles.skeleton} ${styles.subscribeButtonSkeleton}`}
+          />
         </div>
       </div>
     );

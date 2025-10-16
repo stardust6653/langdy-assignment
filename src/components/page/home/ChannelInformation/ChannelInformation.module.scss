@@ -9,8 +9,8 @@
       margin: 0;
       font-size: 36px;
       font-weight: 700;
-      margin-bottom: 4px;
       line-height: 50px;
+      margin-bottom: 4px;
     }
 
     .channelStats {
@@ -53,26 +53,32 @@
 }
 
 .nameSkeleton {
-  width: 200px;
-  height: 28px;
+  width: 250px;
+  height: 50px;
+  margin-bottom: 4px;
+}
+
+.channelStatsSkeleton {
+  width: 300px;
+  height: 20px;
   margin-bottom: 8px;
 }
 
-.subscriberSkeleton {
-  width: 120px;
-  height: 20px;
-}
-
 .channelDescriptionSkeleton {
-  width: 300px;
-  height: 16px;
-  margin-top: 8px;
+  width: 320px;
+  height: 20px;
+  margin-bottom: 4px;
 }
 
 .channelLinksSkeleton {
-  width: 100px;
-  height: 16px;
-  margin-top: 8px;
+  width: 150px;
+  height: 18px;
+  margin-bottom: 12px;
+}
+
+.subscribeButtonSkeleton {
+  width: 56px;
+  height: 36px;
 }
 
 .skeleton {
@@ -80,7 +86,6 @@
   border-radius: 4px;
   animation: pulse 1.5s infinite ease-in-out;
 }
-
 @keyframes pulse {
   0%,
   100% {
