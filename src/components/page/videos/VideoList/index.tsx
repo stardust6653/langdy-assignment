@@ -4,6 +4,7 @@ import styles from "./VideoList.module.scss";
 import { useEffect, useState } from "react";
 import VideoItem from "../VideoItem";
 import VideoFilter from "../VideoFilter";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
 const VideoList = () => {
   const { data, loading, error } = useFetch<VideoData[]>("/api/videos");
@@ -11,34 +12,33 @@ const VideoList = () => {
   const [filteredVideos, setFilteredVideos] = useState<VideoData[]>(data || []);
 
   useEffect(() => {
-    if (data) {
-      if (currentFilter === "최신순") {
-        const sortedByLatest = [...data].sort((a, b) => {
-          return (
-            new Date(b.publishedAt).getTime() -
-            new Date(a.publishedAt).getTime()
-          );
-        });
-        setFilteredVideos(sortedByLatest);
-      } else if (currentFilter === "인기순") {
-        const sortedByPopularity = [...data].sort((a, b) => {
-          return (
-            parseInt(b.viewCount.replace(/,/g, "")) -
-            parseInt(a.viewCount.replace(/,/g, ""))
-          );
-        });
-        setFilteredVideos(sortedByPopularity);
-      } else if (currentFilter === "날짜순") {
-        const sortedByOldest = [...data].sort((a, b) => {
-          return (
-            new Date(a.publishedAt).getTime() -
-            new Date(b.publishedAt).getTime()
-          );
-        });
-        setFilteredVideos(sortedByOldest);
-      }
+    if (!data) return;
+
+    const newFilteredVideos = [...data];
+
+    if (currentFilter === "최신순") {
+      newFilteredVideos.sort(
+        (a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      );
+    } else if (currentFilter === "인기순") {
+      newFilteredVideos.sort(
+        (a, b) =>
+          parseInt(b.viewCount.replace(/,/g, "")) -
+          parseInt(a.viewCount.replace(/,/g, ""))
+      );
+    } else if (currentFilter === "날짜순") {
+      newFilteredVideos.sort(
+        (a, b) =>
+          new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
+      );
     }
+
+    setFilteredVideos(newFilteredVideos);
   }, [data, currentFilter]);
+
+  const { itemsToDisplay: videosToDisplay, loaderRef } =
+    useInfiniteScroll(filteredVideos);
 
   return (
     <div className={styles.videoListContainer}>
@@ -47,10 +47,12 @@ const VideoList = () => {
         setCurrentFilter={setCurrentFilter}
       />
       <div className={styles.videoList}>
-        {filteredVideos?.map((video) => {
-          return <VideoItem key={video.id} video={video} />;
-        })}
+        {videosToDisplay.map((video) => (
+          <VideoItem key={video.id} video={video} />
+        ))}
       </div>
+
+      <div ref={loaderRef} style={{ height: "50px" }} />
     </div>
   );
 };
