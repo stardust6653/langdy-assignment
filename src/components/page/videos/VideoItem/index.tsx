@@ -2,6 +2,7 @@ import { VideoData } from "@/types/videos";
 import Image from "next/image";
 import styles from "./VideoItem.module.scss";
 import { MdMoreVert } from "react-icons/md";
+import { formatRelativeTime } from "@/utils/timeUtils";
 
 interface Props {
   video: VideoData;
@@ -26,7 +27,7 @@ const VideoItem = ({ video }: Props) => {
           <h3 className={styles.title}>{video.title}</h3>
           <div className={styles.metaInfo}>
             <span>조회수 {video.viewCount}</span> ·
-            <span> {new Date(video.publishedAt).toLocaleDateString()}</span>
+            <span> {formatRelativeTime(video.publishedAt)}</span>
           </div>
         </div>
 
