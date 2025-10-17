@@ -1,9 +1,14 @@
-import styles from "./page.module.css";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-     
-    </div>
-  );
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/videos");
+  }, []);
+
+  return null;
 }

@@ -1,0 +1,35 @@
+.thumbnailSkeleton {
+  width: 305px;
+  height: 171px;
+  border-radius: 12px;
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.textSkeleton {
+  .titleSkeleton {
+    width: 281px;
+    height: 14px;
+    margin: 12px 0 6px;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  .descriptionSkeleton {
+    width: 200px;
+    height: 12px;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
