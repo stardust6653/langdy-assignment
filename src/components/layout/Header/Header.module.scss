@@ -1,4 +1,9 @@
 .header {
+  height: var(--header-height);
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 10;
   padding: 0 16px;
   min-height: 56px;
   display: flex;

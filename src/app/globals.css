@@ -99,3 +99,7 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+:root {
+  --header-height: 56px;
+}

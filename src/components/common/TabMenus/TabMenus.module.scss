@@ -4,6 +4,11 @@
   gap: 12px;
   margin-bottom: 16px;
   border-bottom: 1px solid #e5e5e5;
+
+  position: sticky;
+  top: var(--header-height);
+  z-index: 9;
+  background-color: #fff;
 }
 
 .tabMenu {
