@@ -8,7 +8,12 @@ interface Props {
 }
 
 const VideoFilter = ({ currentFilter, setCurrentFilter }: Props) => {
-  const filterList = ["최신순", "인기순", "날짜순"];
+  const filterList = ["recent", "popular", "oldest"];
+  const filterNames: { [key in FilterType]: string } = {
+    recent: "최신순",
+    popular: "인기순",
+    oldest: "날짜순",
+  };
 
   const handleFilterClick = (filter: FilterType) => {
     setCurrentFilter(filter);
@@ -28,7 +33,7 @@ const VideoFilter = ({ currentFilter, setCurrentFilter }: Props) => {
           className={activeButtonClass(filter as FilterType)}
           onClick={() => handleFilterClick(filter as FilterType)}
         >
-          {filter}
+          {filterNames[filter as FilterType]}
         </button>
       ))}
     </div>

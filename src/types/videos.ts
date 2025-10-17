@@ -8,4 +8,13 @@ export interface VideoData {
   duration: string;
 }
 
-export type FilterType = "최신순" | "인기순" | "날짜순";
+export type FilterType = "recent" | "popular" | "oldest";
+
+export interface VideoApiResponse {
+  data: VideoData[];
+  meta: {
+    totalItems: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
+}

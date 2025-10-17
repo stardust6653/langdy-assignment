@@ -1,49 +1,29 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 
-const ITEMS_PER_PAGE = 16;
+interface Props {
+  loading: boolean;
+  hasNextPage: boolean;
+  onLoadMore: () => void;
+}
 
-export const useInfiniteScroll = <T>(items: T[]) => {
-  const [itemsToDisplay, setItemsToDisplay] = useState<T[]>([]);
-  const loaderRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    setItemsToDisplay(items.slice(0, ITEMS_PER_PAGE));
-  }, [items]);
-
-  const loadMoreItems = useCallback(() => {
-    const currentLength = itemsToDisplay.length;
-    const nextItems = items.slice(
-      currentLength,
-      currentLength + ITEMS_PER_PAGE
-    );
-    setItemsToDisplay((prevItems) => [...prevItems, ...nextItems]);
-  }, [items, itemsToDisplay.length]);
+export function useInfiniteScroll({ loading, hasNextPage, onLoadMore }: Props) {
+  const loaderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (itemsToDisplay.length >= items.length) {
-      return;
-    }
-
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMoreItems();
-        }
+        const firstEntry = entries[0];
+        if (firstEntry.isIntersecting && !loading && hasNextPage) onLoadMore();
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
 
-    const currentLoaderRef = loaderRef.current;
-    if (currentLoaderRef) {
-      observer.observe(currentLoaderRef);
-    }
-
+    const currentLoader = loaderRef.current;
+    if (currentLoader) observer.observe(currentLoader);
     return () => {
-      if (currentLoaderRef) {
-        observer.unobserve(currentLoaderRef);
-      }
+      if (currentLoader) observer.unobserve(currentLoader);
     };
-  }, [loadMoreItems, items.length, itemsToDisplay.length]);
+  }, [loading, hasNextPage, onLoadMore]);
 
-  return { itemsToDisplay, loaderRef };
-};
+  return { loaderRef };
+}
