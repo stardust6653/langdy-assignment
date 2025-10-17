@@ -13,7 +13,7 @@ const ShortsPage = () => {
       <Banner data={data} loading={loading} />
       <ChannelInformation data={data} loading={loading} />
       <TabMenus />
-      <div>PostsPage</div>
+      <div>ShortsPage</div>
     </div>
   );
 };
