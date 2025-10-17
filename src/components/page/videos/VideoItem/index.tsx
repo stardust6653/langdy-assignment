@@ -16,7 +16,7 @@ const VideoItem = ({ video }: Props) => {
           alt={video.title}
           className={styles.thumbnail}
           width={305}
-          height={172}
+          height={171}
         />
         <span className={styles.duration}>{video.duration}</span>
       </div>
