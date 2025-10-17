@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import VideoItem from "../VideoItem";
 import VideoFilter from "../VideoFilter";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import VideoSkeleton from "./VideoSkeleton";
 
 const VideoList = () => {
   const { data, loading, error } = useFetch<VideoData[]>("/api/videos");
@@ -39,6 +40,22 @@ const VideoList = () => {
 
   const { itemsToDisplay: videosToDisplay, loaderRef } =
     useInfiniteScroll(filteredVideos);
+
+  if (loading) {
+    return (
+      <div className={styles.videoListContainer}>
+        <VideoFilter
+          currentFilter={currentFilter}
+          setCurrentFilter={setCurrentFilter}
+        />
+        <div className={styles.videoList}>
+          {Array.from({ length: 12 }).map((_, index) => (
+            <VideoSkeleton key={index} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.videoListContainer}>
