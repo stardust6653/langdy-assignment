@@ -44,11 +44,14 @@ npm run dev
   │  │  ├─ layout/Sidebar              # 사이드바 UI
   │  │  ├─ common/Banner               # 채널 배너 영역
   │  │  ├─ common/ChannelInformation   # 채널 정보
+  │  │  ├─ common/MoreModal            # 채널 정보 더보기 모달
   │  │  ├─ common/TabMenus             # 탭 메뉴(홈/동영상/Shorts/…)
   │  │  └─ page/videos                 # Videos 탭 전용 컴포넌트들
   │  │     ├─ VideoFilter              # 정렬 필터 (최신/인기/날짜)
   │  │     ├─ VideoItem                # 단일 비디오 카드
-  │  │     └─ VideoList                # 목록 + 스켈레톤 + 무한스크롤
+  │  │     ├─ VideoList                # 목록 + 스켈레톤 + 무한스크롤
+  │  │     │  └─ hooks                 # 지역적으로 사용되는 훅
+  │  │     └─ VideoSkeleton            # 로딩 스켈레톤
   │  ├─ hooks/
   │  │  ├─ useFetch.ts                 # 공통 데이터 요청 훅
   │  │  └─ useInfiniteScroll.ts        # 인터섹션 옵저버 기반 무한스크롤
@@ -56,7 +59,8 @@ npm run dev
   │  │  ├─ channel.json                # 채널 mock 데이터
   │  │  └─ videos.json                 # 동영상 mock 데이터
   │  ├─ types/                         # 타입 정의
-  │  └─ utils/                         # 유틸 함수
+  │  ├─ utils/                         # 유틸 함수
+  │  └─ config/                        # 설정 파일
   ├─ next.config.ts                    # 원격 이미지 도메인 허용 설정
   ├─ package.json                      # 스크립트/의존성
   └─ eslint.config.mjs                 # ESLint 설정
@@ -78,8 +82,6 @@ npm run dev
 - 스크롤 시 헤더/탭메뉴 플로팅
 
 ## API (Route Handler, Mock)
-
-- 요청 시 로컬에 작성된 JSON 파일을 전달
 
 ### GET /api/channel
 
@@ -118,8 +120,11 @@ npm run dev
 
 ### GET /api/videos
 
-- 응답: 동영상 리스트 배열
-- 현재 쿼리 파라미터는 사용하지 않으며, 정렬/페이지네이션은 프론트에서 처리합니다.
+- 응답: 쿼리 파라미터에 따라 정렬되고 페이지네이션된 동영상 리스트와 메타데이터를 반환합니다.
+- 쿼리 파라미터 :
+  - `sort=recent|popular|oldest (기본값: recent)`
+  - `page=1 (기본값: 1)`
+  - `limit=12 (기본값: 12)`
 - 예시 응답 형태:
 
 ```json
@@ -130,18 +135,27 @@ npm run dev
       "title": "주고받기 표현 (あげる, くれる, もらう) 심화편",
       "thumbnail": "https://i.ytimg.com/vi/nzE0GBnG0k8/hqdefault.jpg",
       "channelTitle": "알려줘 랭짱",
-      "viewCount": "177,665",
+      "stats": { "views": 177665 },
       "publishedAt": "2025-09-22T09:00:00Z",
       "duration": "14:10"
     }
-  ]
+  ],
+  "pageInfo": {
+    "totalItems": 74,
+    "totalPages": 7,
+    "currentPage": 2,
+    "pageSize": 12,
+    "hasNextPage": true
+  }
 }
 ```
 
 ## 아키텍처/구현 상세
 
-- 데이터 요청: `useFetch<T>(url)` 훅으로 공통화 (AbortController 적용)
-- 무한스크롤: `useInfiniteScroll(items)`에서 `IntersectionObserver`로 추가 아이템 로드
+- 데이터 요청:
+  - useFetch<T>(url): /api/channel과 같이 단발성 데이터를 가져오는 데 사용
+  - 정렬/페이지네이션이 필요한 비디오 목록은 컴포넌트 내에서 별도 커스텀 훅(useVideoFetch)을 통해 직접 호출하고 상태(videos, page, hasNextPage)를 관리
+- 무한스크롤: `useInfiniteScroll({...})`에서 `IntersectionObserver`로 추가 아이템 로드
 - 타입: `types/`에 `VideoData`, `ChannelData` 등 명세화
 - 스타일: SCSS 모듈 기반 컴포넌트 단위 스타일링
 - 라우팅: App Router(`app/`) 구조, 각 탭은 개별 `page.tsx`
