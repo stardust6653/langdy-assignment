@@ -24,7 +24,7 @@ const VideoItem = ({ video }: Props) => {
       <div className={styles.videoDetails}>
         <div className={styles.videoInfo}>
           <h3 className={styles.title}>{video.title}</h3>
-          <div>
+          <div className={styles.metaInfo}>
             <span>조회수 {video.viewCount}</span> ·
             <span> {new Date(video.publishedAt).toLocaleDateString()}</span>
           </div>
