@@ -21,7 +21,7 @@ const TabMenus = () => {
   ];
 
   const isActive = (menu: TabMenu) => {
-    return currentPath.endsWith(menu.route);
+    return currentPath === menu.route;
   };
 
   const activeClass = (menu: TabMenu) =>
