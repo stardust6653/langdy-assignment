@@ -4,6 +4,7 @@ import ProfileImage from "./ProfileImage";
 import { formatSubscriberCount } from "@/utils/formatSubscriberCount";
 import MoreModal from "../MoreModal";
 import { useState } from "react";
+import ChannelInformationSkeleton from "./ChannelInformationSkeleton";
 
 interface Props {
   data: ChannelData | null;
@@ -14,26 +15,7 @@ const ChannelInformation = ({ data, loading }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (loading) {
-    return (
-      <div className={styles.channelInformation}>
-        <ProfileImage data={null} loading={true} />
-        <div className={styles.channelText}>
-          <div className={`${styles.skeleton} ${styles.nameSkeleton}`} />
-          <div
-            className={`${styles.skeleton} ${styles.channelStatsSkeleton}`}
-          />
-          <div
-            className={`${styles.skeleton} ${styles.channelDescriptionSkeleton}`}
-          />
-          <div
-            className={`${styles.skeleton} ${styles.channelLinksSkeleton}`}
-          />
-          <div
-            className={`${styles.skeleton} ${styles.subscribeButtonSkeleton}`}
-          />
-        </div>
-      </div>
-    );
+    return <ChannelInformationSkeleton />;
   }
 
   return (
